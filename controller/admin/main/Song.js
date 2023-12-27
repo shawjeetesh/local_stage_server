@@ -4,11 +4,11 @@
 // const FileUploadInfoModal = require("../../../models/FileUploadInfo");
 // const { FileUploadHandler, DeleteFile } = require("../../../common/common");
 const FileManageClass = require("../../../packages/FileManageClass");
-const SongsModal = require("../../../models/Songs");
+const SongsModal = require("../../../models/Product");
 const { SongAggregation } = require("../../../packages/aggregations");
 const VisitsModal = require("../../../models/Visits");
 const mongoose = require("mongoose");
-const AlbumModal = require("../../../models/Album");
+const AlbumModal = require("../../../models/SubCategories");
 const ViewedSong = async (req, res) =>{
     const song_Id = req.params.song_id;
     try {

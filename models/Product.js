@@ -17,44 +17,49 @@ const SongsSchema = new Schema({
     },
     live_image:{
         type: String,
-        default: null
+        default: ""
     },
     local_image:{
         type: String,
-        default: null
+        default: ""
     },
-    live_song:{
+    location_text:{
         type: String,
-        default: null
+        default: ""
     },
-    local_song:{
+    location_cord:{
         type: String,
-        default: null
+        default: ""
+
     },
 
     isUploaded: {
         type: Boolean,
         default: false
     },
-    duration:{
-        type: Number,
-        default:0,
-    },
-    artist:[
+   
+    categories :[
         {
             type: Schema.Types.ObjectId,
             required:true
         }
     ],
-    genre :[
+    sub_category:[
         {
             type: Schema.Types.ObjectId,
             required:true
         }
     ],
-    language:{
-        type:String,
+    sale_price:{
+        type:Number,
         required:true
+    },
+    regular_price:{
+         type:Number,
+         required:true
+    },
+    city:{
+
     },
     visits:{
         type:Number,

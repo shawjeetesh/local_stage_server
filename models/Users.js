@@ -18,14 +18,10 @@ const UserSchema = new Schema({
     },
     email:{
         type:String,
-        require: true,
+        require: false,
         unique:[true,  "Email must be unique"],
         min: 4,
         max: 100,
-    },
-    password:{
-        type:String,
-        require: true,
     },
     phone_code:{
         type:String,

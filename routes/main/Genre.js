@@ -1,4 +1,4 @@
-const { GetGenreList } = require('../../controller/admin/main/Genre');
+const { GetGenreList } = require('../../controller/admin/main/Category');
 
 const Router = require('express').Router()
 

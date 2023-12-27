@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const GenreSchema = new Schema({
+const CategorySchema = new Schema({
     name:{
         type:String,
-        required:true
+        required:true,
     },
     live_image:{
         type: String,
-        default: null
+        default: ""
     },
     local_image:{
         type: String,
-        default: null
+        default: ""
     },
 
     isUploaded: {
@@ -22,6 +22,6 @@ const GenreSchema = new Schema({
 
 },{timestamps:true})
 
-const GenreModal = mongoose.model("Genre", GenreSchema);
+const CategoryModal = mongoose.model("category_list", CategorySchema);
 
-module.exports = GenreModal;
+module.exports = CategoryModal;

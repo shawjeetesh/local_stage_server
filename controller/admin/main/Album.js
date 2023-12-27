@@ -1,4 +1,4 @@
-const AlbumModal = require("../../../models/Album");
+const AlbumModal = require("../../../models/SubCategories");
 const validator = require("validator");
 const serverUpload = require("../../../common/serverUpload");
 const cloudinaryConfig = require("../../../config/cloudinaryConfig");

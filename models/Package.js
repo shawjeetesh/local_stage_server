@@ -16,6 +16,7 @@ const PackageSchema = new Schema({
    },
    offer_message:{
         type:String,
+        default:""
    },
    active:{
     type:Boolean,
