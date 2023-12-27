@@ -39,7 +39,7 @@ Route.use("/main",main);
 Route.get("/",async(req,res)=>{
     const users = await UserModal.find({})
     console.log({users});
-    return res.send('admin '+process.env.DB_LINK)
+    return res.send('admin')
 })
 
 module.exports = Route;
