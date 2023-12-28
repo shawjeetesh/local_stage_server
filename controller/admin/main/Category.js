@@ -34,12 +34,12 @@ const AddCategoryList = async(req, res, next)=>{
     console.log(req.file, req.files);
     const query = {};
     if(!name.length>0){
-        return res.status(422).json({status:"failed", message:"Category name is missing"})
+        return res.status(400).json({status:"failed", message:"Category name is missing"})
 
     }
     
     if((await CategoryModal.find({name})).length)
-    return res.status(422).json({status:"failed", message:"Category Name Already Exists"})
+    return res.status(400).json({status:"failed", message:"Category Name Already Exists"})
     
     try {  
         
@@ -50,7 +50,7 @@ const AddCategoryList = async(req, res, next)=>{
         const savedNewCategory = await newCategory.save()
         if(!savedNewCategory){
             
-            return res.status(422).send({status: "failed", message:"Something went Wrong", data: savedNewCategory});
+            return res.status(400).send({status: "failed", message:"Something went Wrong", data: savedNewCategory});
             
         }
         res.status(200).send({status:"success", message:"New Category Added Successfully", data: savedNewCategory})
@@ -96,7 +96,7 @@ const DeleteCategoryList = async(req, res, next)=>{
     // console.log(req.file);
     console.log({body :req.params});
     if(!id && !id?.length>0){
-        return res.status(422).json({status:"failed", message:"Category id Not Found"})
+        return res.status(400).json({status:"failed", message:"Category id Not Found"})
 
     }
     
@@ -109,14 +109,14 @@ const DeleteCategoryList = async(req, res, next)=>{
         console.log(Category.live_image);
         if(!Category){
             
-            return res.status(422).send({status: "failed", message:"Category Not Found", data: Category});
+            return res.status(400).send({status: "failed", message:"Category Not Found", data: Category});
             
         }
         // const fileInfo = FileUploadInfoModal.findOne({secure_url:Category.live_image})
         const serverfileDeleted = await FileManageClass.deleteServerFile(Category.live_image);
         if(!serverfileDeleted){
             
-            res.status(422).send({status: "failed", message:"fail to delete server image", data: Category})
+            res.status(400).send({status: "failed", message:"fail to delete server image", data: Category})
         }
         const deletedCategory = await CategoryModal.findByIdAndDelete(id);
         // console.log({fileUploaded});

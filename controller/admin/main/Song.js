@@ -13,11 +13,11 @@ const ViewedSong = async (req, res) =>{
     const song_Id = req.params.song_id;
     try {
         if(!song_Id){
-            return res.status(422).send({status: "failed", message:"Song Id Missing"});
+            return res.status(400).send({status: "failed", message:"Song Id Missing"});
         }
         const updated = await SongsModal.findByIdAndUpdate(song_Id,{$inc:{visits:1}});
         if(!updated){
-            return res.status(422).send({status: "failed", message:"Something went wrong"});
+            return res.status(400).send({status: "failed", message:"Something went wrong"});
         }
         res.status(200).send({status: "success", message:"Song successfully Viewed"});
         const newVisit = new VisitsModal()
@@ -94,7 +94,7 @@ const AddSongList = async(req, res, next)=>{
    
     const query = {};
     // if(!name.length>0){
-    //     return res.status(422).json({status:"failed", message:"Song name is missing"})
+    //     return res.status(400).json({status:"failed", message:"Song name is missing"})
 
     // }
     
@@ -120,7 +120,7 @@ const AddSongList = async(req, res, next)=>{
         const savedNewSong = await newSong.save()
         if(!savedNewSong){
             
-            return res.status(422).send({status: "failed", message:"Something went Wrong", data: savedNewSong});
+            return res.status(400).send({status: "failed", message:"Something went Wrong", data: savedNewSong});
             
         }
         res.status(200).send({status:"success", message:"New Song Added Successfully", data: savedNewSong})
@@ -176,7 +176,7 @@ const DeleteSongList = async(req, res, next)=>{
     // console.log(req.file);
     console.log({body :req.params});
     if(!id && !id?.length>0){
-        return res.status(422).json({status:"failed", message:"Song id Not Found"})
+        return res.status(400).json({status:"failed", message:"Song id Not Found"})
 
     }
     
@@ -189,7 +189,7 @@ const DeleteSongList = async(req, res, next)=>{
         console.log(song.live_image);
         if(!song){
             
-            return res.status(422).send({status: "failed", message:"Song Not Found", data: song});
+            return res.status(400).send({status: "failed", message:"Song Not Found", data: song});
             
         }
         // const fileInfo = FileUploadInfoModal.findOne({secure_url:song.live_image})
@@ -197,7 +197,7 @@ const DeleteSongList = async(req, res, next)=>{
         const serverSongDeleted = await FileManageClass.deleteServerFile(song.live_song);
         if(!serverfileDeleted || !serverSongDeleted){
             
-            res.status(422).send({status: "failed", message:"fail to delete server image", data: song})
+            res.status(400).send({status: "failed", message:"fail to delete server image", data: song})
         }
         const deletedSong = await SongsModal.findByIdAndDelete(id);
         // console.log({fileUploaded});

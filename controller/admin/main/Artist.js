@@ -56,15 +56,15 @@ const AddArtistsList = async(req, res, next)=>{
     const file = req.file;
     console.log(req.body);
     if(!name.length>0){
-        return res.status(422).json({status:"failed", message:"Artist name is missing"})
+        return res.status(400).json({status:"failed", message:"Artist name is missing"})
 
     }
     if(!language.length>0){
-        return res.status(422).json({status:"failed", message:"Artist language is missing"})
+        return res.status(400).json({status:"failed", message:"Artist language is missing"})
 
     }
     if(!gender.length>0){
-        return res.status(422).json({status:"failed", message:"Artist language is missing"})
+        return res.status(400).json({status:"failed", message:"Artist language is missing"})
 
     }
     console.log(name, language);
@@ -76,7 +76,7 @@ const AddArtistsList = async(req, res, next)=>{
         newArtist.dev_image = file.path;
         const savedNewArtist = await newArtist.save()
         if(!savedNewArtist)
-        return res.status(422).send({status: "failed", message:"Something went Wrong", data: savedNewArtist});
+        return res.status(400).send({status: "failed", message:"Something went Wrong", data: savedNewArtist});
         // return res.status().send({status: "failed", message:"Something went Wrong", data: savedNewArtist});
         res.status(200).json({status:"success", message:"New Artist Added Successfully", data: savedNewArtist})
         
@@ -114,7 +114,7 @@ const DeleteArtistsList = async(req, res, next)=>{
     const {id} = req.params;
     // console.log(req.file);
     if(!id){
-        return res.status(422).json({status:"failed", message:"Genre id Not Found"})
+        return res.status(400).json({status:"failed", message:"Genre id Not Found"})
 
     }
     
@@ -128,14 +128,14 @@ const DeleteArtistsList = async(req, res, next)=>{
         console.log(artist.live_image);
         if(!artist){
             
-            return res.status(422).send({status: "failed", message:"Genre Not Found", data: artist});
+            return res.status(400).send({status: "failed", message:"Genre Not Found", data: artist});
             
         }
         // const fileInfo = FileUploadInfoModal.findOne({secure_url:artist.live_image})
         const serverfileDeleted = await FileManageClass.deleteServerFile(artist.live_image);
         if(!serverfileDeleted){
             
-            res.status(422).send({status: "failed", message:"fail to delete server image", data: artist})
+            res.status(400).send({status: "failed", message:"fail to delete server image", data: artist})
         }
         const deletedArtist = await ArtistModal.findByIdAndDelete(id);
         // console.log({fileUploaded});

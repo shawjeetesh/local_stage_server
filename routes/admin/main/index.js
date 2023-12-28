@@ -1,6 +1,6 @@
 // const { CreateBlankPortFolio, GetPortfolioDataById, GetContactData } = require("../../../controller/main/Home");
 // const UserModal = require("../../../models/Users");
-// const { VerifyToken } = require('../../../middleware/tokenVerify');
+const { VerifyToken } = require('../../../middleware/tokenVerify');
 // const UsersRouteAdmin = require('./users');
 // const ArtistsRouteAdmin = require('./artists');
 const GenresRouteAdmin = require('./category');
@@ -10,7 +10,7 @@ const GenresRouteAdmin = require('./category');
 
 const Route = require("express").Router();
 
-// Route.use(VerifyToken)
+Route.use(VerifyToken)
 
 // Route.use("/users-list", UsersRouteAdmin);
 // Route.use("/artists", ArtistsRouteAdmin);

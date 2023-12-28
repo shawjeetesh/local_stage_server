@@ -23,31 +23,31 @@ const CreateNewUser = async(req, res, next)=>{
     console.log("body",req.body);
 
     if(!trimData(name)){
-        return res.status(422).json({status:"failed", message:"Username is missing"})
+        return res.status(400).json({status:"failed", message:"Username is missing"})
     }
     // console.log(`"jeet@gmail.com".match()`,"jeet@gmail.com".match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/))
     // if("jeet@gmail.com".match()){
-    //     return res.status(422).json({status:"failed", message:"Username is missing"}).end()
+    //     return res.status(400).json({status:"failed", message:"Username is missing"}).end()
     // }
     if(!password){
-        return res.status(422).json({status:"failed", message:"Password is missing"})
+        return res.status(400).json({status:"failed", message:"Password is missing"})
     }
     if(!email){
-        return res.status(422).json({status:"failed", message:"Email is missing"})
+        return res.status(400).json({status:"failed", message:"Email is missing"})
     }
     if(!phone){
-        return res.status(422).json({status:"failed", message:"Phone is missing"})
+        return res.status(400).json({status:"failed", message:"Phone is missing"})
     }
 
     const existEmail = await UserModal.findOne({email: email})
     console.log("existEmail",existEmail)
     if(existEmail){
-        return res.status(422).send({status: "failed", message:"Email Already Exits"});
+        return res.status(400).send({status: "failed", message:"Email Already Exits"});
     }
     const existPhone = await UserModal.findOne({phone_number: phone})
     console.log("existPhone",existPhone)
     if(existPhone){
-        return res.status(422).send({status: "failed", message:"Phone Number Already Exits"});
+        return res.status(400).send({status: "failed", message:"Phone Number Already Exits"});
     }
     const newUser = new UserModal();
     newUser.name = name;
@@ -72,34 +72,34 @@ const UpdateUserData = async(req, res, next)=>{
     console.log("body",req.body);
 
     if(!trimData(name)){
-        return res.status(422).json({status:"failed", message:"Username is missing"})
+        return res.status(400).json({status:"failed", message:"Username is missing"})
     }
     if(!trimData(user_id)){
-        return res.status(422).json({status:"failed", message:"User Id is missing"})
+        return res.status(400).json({status:"failed", message:"User Id is missing"})
     }
     // console.log(`"jeet@gmail.com".match()`,"jeet@gmail.com".match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/))
     // if("jeet@gmail.com".match()){
-    //     return res.status(422).json({status:"failed", message:"Username is missing"}).end()
+    //     return res.status(400).json({status:"failed", message:"Username is missing"}).end()
     // }
     if(!password){
-        return res.status(422).json({status:"failed", message:"Password is missing"})
+        return res.status(400).json({status:"failed", message:"Password is missing"})
     }
     if(!email){
-        return res.status(422).json({status:"failed", message:"Email is missing"})
+        return res.status(400).json({status:"failed", message:"Email is missing"})
     }
     if(!phone){
-        return res.status(422).json({status:"failed", message:"Phone is missing"})
+        return res.status(400).json({status:"failed", message:"Phone is missing"})
     }
 
     const existEmail = await UserModal.findOne({email: email})
     console.log("existEmail",existEmail)
     if(existEmail){
-        return res.status(422).send({status: "failed", message:"Email Already Exits"});
+        return res.status(400).send({status: "failed", message:"Email Already Exits"});
     }
     const existPhone = await UserModal.findOne({phone_number: phone})
     console.log("existPhone",existPhone)
     if(existPhone){
-        return res.status(422).send({status: "failed", message:"Phone Number Already Exits"});
+        return res.status(400).send({status: "failed", message:"Phone Number Already Exits"});
     }
     // const portfolioData = await PortfolioModal.findById(req.params.id)
 }

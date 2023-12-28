@@ -34,7 +34,7 @@ const GetAlbumSongs = async(req, res, next)=>{
     const id = req.params.id
     const query = {};
     if(!id){
-        return res.status(422).json({status:"failed", message:"Album name is missing"})
+        return res.status(400).json({status:"failed", message:"Album name is missing"})
 
     }
    console.log({id});
@@ -45,7 +45,7 @@ const GetAlbumSongs = async(req, res, next)=>{
             $match:{_id:mongoose.Types.ObjectId(id)}
         }]).exec();
         if(!Album){
-            return res.status(422).json({status:"success", message:"No Album Found"})
+            return res.status(400).json({status:"success", message:"No Album Found"})
 
         }
         return res.status(200).json({status:"success", message:"Album List", data: Album[0]})
@@ -63,7 +63,7 @@ const AddAlbumList = async(req, res, next)=>{
     // console.log(req.file, req.files);
     // const query = {};
     if(!name){
-        return res.status(422).json({status:"failed", message:"Album name is missing"})
+        return res.status(400).json({status:"failed", message:"Album name is missing"})
 
     }
     
@@ -78,7 +78,7 @@ const AddAlbumList = async(req, res, next)=>{
         const savedNewAlbum = await newAlbum.save()
         if(!savedNewAlbum){
             
-            return res.status(422).send({status: "failed", message:"Something went Wrong", data: savedNewAlbum});
+            return res.status(400).send({status: "failed", message:"Something went Wrong", data: savedNewAlbum});
             
         }
         res.status(200).send({status:"success", message:"New Album Added Successfully", data: savedNewAlbum})
@@ -126,7 +126,7 @@ const AddSongInAlbum = async (req, res) => {
     try {
         const updated = await AlbumModal.findByIdAndUpdate(album_id, {$addToSet:{songs:song_id}})
         if(!updated){
-            return res.status(422).send({status: "failed", message:"Something went Wrong"});
+            return res.status(400).send({status: "failed", message:"Something went Wrong"});
 
         }
         res.status(200).send({status:"success", message:"New Song added to Album", data: updated})
@@ -144,7 +144,7 @@ const DeleteSongInAlbum = async (req, res) => {
     try {
         const updated = await AlbumModal.findByIdAndUpdate(album_id, {$pull:{songs:song_id}})
         if(!updated){
-            return res.status(422).send({status: "failed", message:"Something went Wrong"});
+            return res.status(400).send({status: "failed", message:"Something went Wrong"});
 
         }
         res.status(200).send({status:"success", message:"New Song added to Album", data: updated})
@@ -162,7 +162,7 @@ const DeleteAlbumList = async(req, res, next)=>{
     // console.log(req.file);
     console.log({body :req.params});
     if(!id && !id?.length>0){
-        return res.status(422).json({status:"failed", message:"Album id Not Found"})
+        return res.status(400).json({status:"failed", message:"Album id Not Found"})
 
     }
     
@@ -175,14 +175,14 @@ const DeleteAlbumList = async(req, res, next)=>{
         console.log(genre.live_image);
         if(!genre){
             
-            return res.status(422).send({status: "failed", message:"Album Not Found", data: genre});
+            return res.status(400).send({status: "failed", message:"Album Not Found", data: genre});
             
         }
         // const fileInfo = FileUploadInfoModal.findOne({secure_url:genre.live_image})
         const serverfileDeleted = await FileManageClass.deleteServerFile(genre.live_image);
         if(!serverfileDeleted){
             
-            res.status(422).send({status: "failed", message:"fail to delete server image", data: genre})
+            res.status(400).send({status: "failed", message:"fail to delete server image", data: genre})
         }
         const deletedAlbum = await AlbumModal.findByIdAndDelete(id);
         // console.log({fileUploaded});

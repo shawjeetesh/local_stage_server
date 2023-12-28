@@ -4,12 +4,18 @@ const jwt = require('jsonwebtoken');
 const fs = require("fs");
 const path = require("path");
 const { notify } = require('../routes/admin/login');
+const firebaseAuth = require('../config/firebaseAuth');
 const Schema = mongoose.Schema;
 const secretKey =  fs.readFileSync("./cert/private.pem")
 const publicKey =  fs.readFileSync("./cert/public.pem")
 console.log("publicKey", publicKey)
 
 const UserSchema = new Schema({
+    firebase_id:{
+        type:String,
+        require: true,
+        unique:[true,  "firebase id is now unique."],
+    },
     name: {
         type:String,
         require: true,
@@ -58,11 +64,10 @@ const UserSchema = new Schema({
         type:Boolean,
         default:false
     },
-    token:[{
+    device_token:{
         type:String,
-        default:[],
-       
-    }],
+        default: "",
+    },
     
 },{
     timestamps:true
@@ -77,11 +82,16 @@ UserSchema.methods.createToken = (id)=> jwt.sign({
       algorithm: "RS256"
   }
   );
-UserSchema.methods.verifyToken = (token)=> jwt.verify(token, publicKey, (err, data)=>{
-    console.log("data",data, err)
-    if(err) return {err: err};
-    return {data: data};
-});
+UserSchema.methods.verifyToken = async (token)=> {
+    try {
+        
+        const data = await firebaseAuth.auth().verifyIdToken(token)
+    
+        return {data}
+    } catch (err) {
+        return {err}
+    }
+};
 
 // // Generating Password Reset Token
 // userSchema.methods.getResetPasswordToken = function () {
